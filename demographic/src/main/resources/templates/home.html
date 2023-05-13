@@ -8,11 +8,11 @@
 
 <body>
     <h3> MEDISCREEN DEMOGRAPHIC </h3>
-    <h6>CHOISIR UNE ACTION :</h6>
+    <h6> CHOISIR UNE ACTION : </h6>
     <a href="/patient/all" class="btn btn-success btn-sm col-md-1">GET PATIENTS</a>
 
     <div class="row" style="margin-top:40px;">
-        <h6>ADD PATIENT :</h6>
+        <h6> ADD PATIENT : </h6>
 		<form action="#" th:action="@{/patient/add}" th:object="${patientDTO}" method="post" class="form-horizontal" style="width: 100%">
 			<label for="familly">Last Name</label>
         	<input id="familly" type="text" placeholder="familly" th:field="*{familly}" required>
@@ -23,7 +23,7 @@
 			<label for="dob">Birth Date</label>
             <input id="dob" type="text" placeholder="dob" th:field="*{dob}">
 
-            <label for="sex">Sexe</label>
+            <label for="sex">Sex</label>
             <input id="sex" type="text" placeholder="sex" th:field="*{sex}">
 
             <label for="address">Address</label>
@@ -34,6 +34,16 @@
 
             <input type="submit" class="btn btn-success btn-sm col-md-1" value="Add Patient"/>
 		</form>
+	</div>
+	<div class="row" style="margin-top:40px;">
+        <h6> SEARCH PATIENT BY NAME : </h6>
+        <form action="#" th:action="@{/patient/search}" method="get" class="form-horizontal" style="width: 100%">
+        	<label for="familly">Last Name</label>
+        	<input id="familly" type="text" placeholder="familly" name="familly" required>
+        	
+        	<input type="submit" class="btn btn-success btn-sm col-md-1" value="Search Patient"/>
+        </form>
+        <span th:if="${message != null}" style="color:red;">Patient not found</span>
 	</div>
 </body>
 

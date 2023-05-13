@@ -39,12 +39,12 @@ public class PatientService {
 	}
 	
 	public PatientDTO getPatientByName(String name) {
-		
 		PatientDTO patientDTO = null;
-		
 		try {
-			patientDTO = new PatientDTO(patientRepository.findByFamilly(name));
-			
+			Patient patient = patientRepository.findByFamilly(name);
+			if (patient != null) {
+				patientDTO = new PatientDTO(patient);
+			}
 		} catch(Exception e) {
 			logger.error("Error addPatient : " + e);
 			return patientDTO;
@@ -66,11 +66,18 @@ public class PatientService {
 		return true;
 	}
 	
-	public boolean modifyPatient(PatientDTO patientDTO) {
+	public boolean modifyPatient(Integer id, PatientDTO patientDTO) {
 		try {
-			Patient patient = new Patient(patientDTO);
-			patient.setId(patientDTO.getId());
-			patientRepository.save(patient);
+			Patient patient = patientRepository.findById(id).get();
+			if (patient != null) {
+				patient.setFamilly(patientDTO.getFamilly());
+				patient.setGiven(patientDTO.getGiven());
+				patient.setDob(patientDTO.getDob());
+				patient.setSex(patientDTO.getSex());
+				patient.setAddress(patientDTO.getAddress());
+				patient.setPhone(patientDTO.getPhone());
+				patientRepository.save(patient);
+			}
 			
 		} catch(Exception e) {
 			logger.error("Error addPatient : " + e);
