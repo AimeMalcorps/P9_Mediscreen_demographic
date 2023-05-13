@@ -1,17 +1,18 @@
 package com.mediscreen.demographic.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.mediscreen.demographic.dto.PatientDTO;
 import com.mediscreen.demographic.service.PatientService;
@@ -22,43 +23,93 @@ public class PatientController {
 	@Autowired
 	PatientService patientService;
 	
-	private static final Logger logger = LoggerFactory.getLogger(PatientController.class);
-	
 	@GetMapping("/patient/all")
-	public List<PatientDTO> getAllPatients() {
-		return patientService.getAllPatients();
+	public ModelAndView getAllPatients() {
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("patientDTOList", patientService.getAllPatients());
+		mav.setViewName("/patient/list");
+		mav.setStatus(HttpStatus.OK);
+		return mav;
 	}
 	
-	@GetMapping("/patient/{name}")
-	public PatientDTO getPatientByName(@PathVariable String name) {
-		return patientService.getPatientByName(name);
+	@GetMapping("/patient/search")
+	public ModelAndView getPatientByName(@RequestParam String familly) {
+		ModelAndView mav = new ModelAndView();
+		PatientDTO patientDTO = patientService.getPatientByName(familly);
+		if (patientDTO != null) {
+			List<PatientDTO> patientDTOList = new ArrayList<PatientDTO>();
+			patientDTOList.add(patientDTO);
+			mav.addObject("patientDTOList", patientDTOList);
+			mav.setViewName("/patient/list");
+			mav.setStatus(HttpStatus.OK);
+		} else {
+			mav.addObject("patientDTO", new PatientDTO());
+			mav.addObject("message", "error");
+			mav.setViewName("/home");
+			mav.setStatus(HttpStatus.BAD_REQUEST);
+		}
+		return mav;
 	}
 	
 	@PostMapping("/patient/add")
-	public HttpStatus addPatient(@RequestBody PatientDTO patientDTO) {
+	public ModelAndView addPatient(@Valid PatientDTO patientDTO) {
+		ModelAndView mav = new ModelAndView();
+		HttpStatus status = null;
 		if (patientService.addPatient(patientDTO)) {
-			return HttpStatus.OK;
+			status = HttpStatus.OK;
 		} else {
-			return HttpStatus.BAD_REQUEST;
+			status = HttpStatus.BAD_REQUEST;
 		}
+		mav.setViewName("/home");
+		mav.addObject("patientDTO", new PatientDTO());
+		mav.setStatus(status);
+		return mav;
 	}
 	
-	@PostMapping("/patient/modify")
-	public HttpStatus modifyPatient(@RequestBody PatientDTO patientDTO) {
-		if (patientService.modifyPatient(patientDTO)) {
-			return HttpStatus.OK;
+	@GetMapping("/patient/update/{name}")
+	public ModelAndView getUpdateTemplate(@PathVariable String name) {
+		ModelAndView mav = new ModelAndView();
+		PatientDTO patientDTO = patientService.getPatientByName(name);
+		if (patientDTO != null) {
+			mav.addObject("patientDTO", patientDTO);
+			mav.setViewName("patient/update");
+			mav.setStatus(HttpStatus.OK);
 		} else {
-			return HttpStatus.BAD_REQUEST;
+			mav.addObject("patientDTOList", patientService.getAllPatients());
+			mav.setViewName("/patient/list");
+			mav.setStatus(HttpStatus.BAD_REQUEST);
 		}
+		return mav;
 	}
 	
-	@DeleteMapping("/patient/delete/{id}")
-	public HttpStatus modifyPatient(@PathVariable Integer id) {
+	@PostMapping("/patient/update/{id}")
+	public ModelAndView modifyPatient(@PathVariable Integer id, @Valid PatientDTO patientDTO) {
+		ModelAndView mav = new ModelAndView();
+		HttpStatus status = null;
+		if (patientService.modifyPatient(id, patientDTO)) {
+			status = HttpStatus.OK;
+		} else {
+			status = HttpStatus.BAD_REQUEST;
+		}
+		mav.addObject("patientDTOList", patientService.getAllPatients());
+		mav.setViewName("/patient/list");
+		mav.setStatus(status);
+		return mav;
+	}
+	
+	@GetMapping("/patient/delete/{id}")
+	public ModelAndView modifyPatient(@PathVariable Integer id) {
+		ModelAndView mav = new ModelAndView();
+		HttpStatus status = null;
 		if (patientService.deletePatient(id)) {
-			return HttpStatus.OK;
+			status =  HttpStatus.OK;
 		} else {
-			return HttpStatus.BAD_REQUEST;
+			status = HttpStatus.BAD_REQUEST;
 		}
+		mav.addObject("patientDTOList", patientService.getAllPatients());
+		mav.setViewName("/patient/list");
+		mav.setStatus(status);
+		return mav;
 	}
 
 }
