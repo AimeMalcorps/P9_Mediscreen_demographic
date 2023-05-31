@@ -41,7 +41,7 @@ public class PatientService {
 	public PatientDTO getPatientByName(String name) {
 		PatientDTO patientDTO = null;
 		try {
-			Patient patient = patientRepository.findByFamilly(name);
+			Patient patient = patientRepository.findByFamillyIgnoreCase(name);
 			if (patient != null) {
 				patientDTO = new PatientDTO(patient);
 			}
