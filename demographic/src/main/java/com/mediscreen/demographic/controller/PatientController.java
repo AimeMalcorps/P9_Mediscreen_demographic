@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -25,13 +26,13 @@ public class PatientController {
 		return patientService.getAllPatients();
 	}
 	
-	@GetMapping("/patient/search")
-	public PatientDTO getPatientByName(@RequestParam String familly) {
+	@PostMapping("/patient/search")
+	public PatientDTO getPatientByName(@RequestBody String familly) {
 		return patientService.getPatientByName(familly);
 	}
 	
 	@PostMapping("/patient/add")
-	public boolean addPatient(@Valid PatientDTO patientDTO) {
+	public boolean addPatient(@RequestBody PatientDTO patientDTO) {
 		return patientService.addPatient(patientDTO);
 	}
 	
@@ -41,7 +42,7 @@ public class PatientController {
 	}
 	
 	@PostMapping("/patient/update/{id}")
-	public boolean modifyPatient(@PathVariable Integer id, @Valid PatientDTO patientDTO) {
+	public boolean modifyPatient(@PathVariable Integer id, @RequestBody PatientDTO patientDTO) {
 		return patientService.modifyPatient(id, patientDTO);
 	}
 	
