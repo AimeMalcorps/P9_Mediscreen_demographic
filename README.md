@@ -2,7 +2,7 @@
 
 ## Description
 Ce projet est une application Java Spring Boot développée à l'aide de Maven.
-Il constutue un des trois micro-services backen composants l'application Mediscreen.
+Il constutue un des trois micro-services backend composants l'application Mediscreen.
 Ce service propose une API permettant de gérer les infomations des patients de l'application. Elle doit être couplée avec une base de donnée MySql. 
 
 ## Configuration requise
