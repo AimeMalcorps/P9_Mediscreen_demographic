@@ -6,8 +6,8 @@ Il constutue un des trois micro-services backen composants l'application Mediscr
 Ce service propose une API permettant de gérer les infomations des patients de l'application. Elle doit être couplée avec une base de donnée MySql. 
 
 ## Configuration requise
-- Java 17
-- Maven 4.0.0
+- [Java 17](https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html)
+- [Maven 4.0.0](https://maven.apache.org/download.cgi)
 
 ## Installation
 
