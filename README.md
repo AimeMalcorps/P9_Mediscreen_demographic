@@ -14,13 +14,13 @@ Ce service propose une API permettant de gérer les infomations des patients de 
 1. Clonez le projet depuis le référentiel Git :
 
    ```bash
-   git clone <lien_du_referentiel>
+   git clone https://github.com/AimeMalcorps/P9_Mediscreen_demographic.git
    ```
 
 2. Accédez au répertoire du projet :
 
    ```bash
-   cd <nom_du_projet>
+   cd P9_Mediscreen_demographic
    ```
 
 3. Exécutez la commande Maven pour construire le projet :
@@ -42,11 +42,7 @@ Ce service propose une API permettant de gérer les infomations des patients de 
    ```
    http://localhost:8080
    ```
-
-## Documentation
-
-Pour en savoir plus sur les fonctionnalités et l'utilisation de l'application, consultez la documentation [ici](lien_vers_la_documentation).
-
+   
 ## Auteurs
 
 - Aimé Malcorps
