@@ -43,6 +43,26 @@ Ce service propose une API permettant de gérer les infomations des patients de 
    http://localhost:8080
    ```
    
+ ## Dockerisé
+
+1. Build image
+
+```bash
+docker image build -t demographic .
+```
+
+2. Run container
+
+```bash
+docker container run --name demographic -p 8080:8080 -d demographic
+```
+
+3. Requêtez à l'application à l'adresse suivante :
+
+```bash
+http://localhost:8080
+```  
+
 ## Auteurs
 
 - Aimé Malcorps
