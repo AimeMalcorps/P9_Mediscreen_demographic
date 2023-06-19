@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.mediscreen.demographic.dto.PatientDTO;
 import com.mediscreen.demographic.entity.Patient;
+import com.mediscreen.demographic.proxies.HistoryNotesProxy;
 import com.mediscreen.demographic.repository.PatientRepository;
 
 @Service
@@ -17,6 +18,9 @@ public class PatientService {
 	
 	@Autowired
 	PatientRepository patientRepository;
+	
+	@Autowired
+	HistoryNotesProxy historyNotesProxy;
 	
 	private Logger logger = LoggerFactory.getLogger(PatientService.class);
 	
@@ -90,6 +94,7 @@ public class PatientService {
 	public boolean deletePatient(Integer id) {
 		try {
 			patientRepository.deleteById(id);
+			historyNotesProxy.deleteNotesByPatientId(id);
 		} catch(Exception e) {
 			logger.error("Error addPatient : " + e);
 			return false;
