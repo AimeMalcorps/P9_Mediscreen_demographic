@@ -64,7 +64,7 @@ public class PatientDTO {
 		this.id = patient.getId();
 		this.familly = patient.getFamilly();
 		this.given = patient.getGiven();
-		this.dob = patient.getAddress();
+		this.dob = patient.getDob();
 		this.sex = patient.getSex();
 		this.address = patient.getAddress();
 		this.phone = patient.getPhone();

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.mediscreen.demographic.dto.PatientDTO;
 import com.mediscreen.demographic.entity.Patient;
+import com.mediscreen.demographic.proxies.HistoryNotesProxy;
 import com.mediscreen.demographic.repository.PatientRepository;
 
 @Service
@@ -17,6 +18,9 @@ public class PatientService {
 	
 	@Autowired
 	PatientRepository patientRepository;
+	
+	@Autowired
+	HistoryNotesProxy historyNotesProxy;
 	
 	private Logger logger = LoggerFactory.getLogger(PatientService.class);
 	
@@ -39,12 +43,12 @@ public class PatientService {
 	}
 	
 	public PatientDTO getPatientByName(String name) {
-		
 		PatientDTO patientDTO = null;
-		
 		try {
-			patientDTO = new PatientDTO(patientRepository.findByFamilly(name));
-			
+			Patient patient = patientRepository.findByFamillyIgnoreCase(name);
+			if (patient != null) {
+				patientDTO = new PatientDTO(patient);
+			}
 		} catch(Exception e) {
 			logger.error("Error addPatient : " + e);
 			return patientDTO;
@@ -66,11 +70,18 @@ public class PatientService {
 		return true;
 	}
 	
-	public boolean modifyPatient(PatientDTO patientDTO) {
+	public boolean modifyPatient(Integer id, PatientDTO patientDTO) {
 		try {
-			Patient patient = new Patient(patientDTO);
-			patient.setId(patientDTO.getId());
-			patientRepository.save(patient);
+			Patient patient = patientRepository.findById(id).get();
+			if (patient != null) {
+				patient.setFamilly(patientDTO.getFamilly());
+				patient.setGiven(patientDTO.getGiven());
+				patient.setDob(patientDTO.getDob());
+				patient.setSex(patientDTO.getSex());
+				patient.setAddress(patientDTO.getAddress());
+				patient.setPhone(patientDTO.getPhone());
+				patientRepository.save(patient);
+			}
 			
 		} catch(Exception e) {
 			logger.error("Error addPatient : " + e);
@@ -83,6 +94,7 @@ public class PatientService {
 	public boolean deletePatient(Integer id) {
 		try {
 			patientRepository.deleteById(id);
+			historyNotesProxy.deleteNotesByPatientId(id);
 		} catch(Exception e) {
 			logger.error("Error addPatient : " + e);
 			return false;

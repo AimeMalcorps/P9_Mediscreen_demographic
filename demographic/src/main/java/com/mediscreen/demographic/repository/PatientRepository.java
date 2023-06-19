@@ -8,6 +8,6 @@ import com.mediscreen.demographic.entity.Patient;
 @Repository
 public interface PatientRepository extends JpaRepository<Patient, Integer> {
 	
-	Patient findByFamilly(String name);
+	Patient findByFamillyIgnoreCase(String name);
 
 }
