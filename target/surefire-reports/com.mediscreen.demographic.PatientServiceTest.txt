@@ -1,4 +1,0 @@
--------------------------------------------------------------------------------
-Test set: com.mediscreen.demographic.PatientServiceTest
--------------------------------------------------------------------------------
-Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 4.35 s - in com.mediscreen.demographic.PatientServiceTest
