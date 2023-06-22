@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PatientService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Mediscreen</a> &gt; <a href="index.source.html" class="el_package">com.mediscreen.demographic.service</a> &gt; <span class="el_source">PatientService.java</span></div><h1>PatientService.java</h1><pre class="source lang-java linenums">package com.mediscreen.demographic.service;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.mediscreen.demographic.dto.PatientDTO;
+import com.mediscreen.demographic.entity.Patient;
+import com.mediscreen.demographic.proxies.HistoryNotesProxy;
+import com.mediscreen.demographic.repository.PatientRepository;
+
+@Service
+<span class="fc" id="L17">public class PatientService {</span>
+	
+	@Autowired
+	PatientRepository patientRepository;
+	
+	@Autowired
+	HistoryNotesProxy historyNotesProxy;
+	
+<span class="fc" id="L25">	private Logger logger = LoggerFactory.getLogger(PatientService.class);</span>
+	
+	public List&lt;PatientDTO&gt; getAllPatients() {
+		
+<span class="fc" id="L29">		List&lt;PatientDTO&gt; patientDTOList = new ArrayList&lt;PatientDTO&gt;();</span>
+		
+		try {
+			
+<span class="fc bfc" id="L33" title="All 2 branches covered.">			for (Patient patient : patientRepository.findAll()) {</span>
+<span class="fc" id="L34">				patientDTOList.add(new PatientDTO(patient));</span>
+			}
+			
+<span class="pc" id="L37">		} catch (Exception e) {</span>
+<span class="nc" id="L38">			logger.error(&quot;Error getAllPatients : &quot; + e);</span>
+<span class="nc" id="L39">			return null;</span>
+		}
+		
+<span class="fc" id="L42">		return patientDTOList;</span>
+	}
+	
+	public PatientDTO getPatientByName(String name) {
+<span class="fc" id="L46">		PatientDTO patientDTO = null;</span>
+		try {
+<span class="fc" id="L48">			Patient patient = patientRepository.findByFamillyIgnoreCase(name);</span>
+<span class="fc bfc" id="L49" title="All 2 branches covered.">			if (patient != null) {</span>
+<span class="fc" id="L50">				patientDTO = new PatientDTO(patient);</span>
+			}
+<span class="pc" id="L52">		} catch(Exception e) {</span>
+<span class="nc" id="L53">			logger.error(&quot;Error addPatient : &quot; + e);</span>
+<span class="nc" id="L54">			return patientDTO;</span>
+		}
+		
+<span class="fc" id="L57">		return patientDTO;</span>
+	}
+	
+	public boolean addPatient(PatientDTO patientDTO) {
+		try {
+<span class="fc" id="L62">			Patient patient = new Patient(patientDTO);</span>
+<span class="fc" id="L63">			patientRepository.save(patient);</span>
+			
+<span class="pc" id="L65">		} catch(Exception e) {</span>
+<span class="nc" id="L66">			logger.error(&quot;Error addPatient : &quot; + e);</span>
+<span class="nc" id="L67">			return false;</span>
+		}
+		
+<span class="fc" id="L70">		return true;</span>
+	}
+	
+	public boolean modifyPatient(Integer id, PatientDTO patientDTO) {
+		try {
+<span class="fc" id="L75">			Patient patient = patientRepository.findById(id).get();</span>
+<span class="pc bpc" id="L76" title="1 of 2 branches missed.">			if (patient != null) {</span>
+<span class="fc" id="L77">				patient.setFamilly(patientDTO.getFamilly());</span>
+<span class="fc" id="L78">				patient.setGiven(patientDTO.getGiven());</span>
+<span class="fc" id="L79">				patient.setDob(patientDTO.getDob());</span>
+<span class="fc" id="L80">				patient.setSex(patientDTO.getSex());</span>
+<span class="fc" id="L81">				patient.setAddress(patientDTO.getAddress());</span>
+<span class="fc" id="L82">				patient.setPhone(patientDTO.getPhone());</span>
+<span class="fc" id="L83">				patientRepository.save(patient);</span>
+			}
+			
+<span class="pc" id="L86">		} catch(Exception e) {</span>
+<span class="nc" id="L87">			logger.error(&quot;Error addPatient : &quot; + e);</span>
+<span class="nc" id="L88">			return false;</span>
+		}
+		
+<span class="fc" id="L91">		return true;</span>
+	}
+	
+	public boolean deletePatient(Integer id) {
+		try {
+<span class="fc" id="L96">			patientRepository.deleteById(id);</span>
+<span class="nc" id="L97">			historyNotesProxy.deleteNotesByPatientId(id);</span>
+<span class="pc" id="L98">		} catch(Exception e) {</span>
+<span class="fc" id="L99">			logger.error(&quot;Error addPatient : &quot; + e);</span>
+<span class="fc" id="L100">			return false;</span>
+		}
+<span class="nc" id="L102">		return true;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PatientController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Mediscreen</a> &gt; <a href="index.source.html" class="el_package">com.mediscreen.demographic.controller</a> &gt; <span class="el_source">PatientController.java</span></div><h1>PatientController.java</h1><pre class="source lang-java linenums">package com.mediscreen.demographic.controller;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.mediscreen.demographic.dto.PatientDTO;
+import com.mediscreen.demographic.service.PatientService;
+
+@CrossOrigin(origins = &quot;http://localhost:4200&quot;)
+@RestController
+<span class="fc" id="L18">public class PatientController {</span>
+	
+	@Autowired
+	PatientService patientService;
+	
+	@GetMapping(&quot;/patient/all&quot;)
+	public List&lt;PatientDTO&gt; getAllPatients() {
+<span class="fc" id="L25">		return patientService.getAllPatients();</span>
+	}
+	
+	@PostMapping(&quot;/patient/search&quot;)
+	public PatientDTO getPatientByName(@RequestBody String familly) {
+<span class="fc" id="L30">		return patientService.getPatientByName(familly);</span>
+	}
+	
+	@PostMapping(&quot;/patient/add&quot;)
+	public boolean addPatient(@RequestBody PatientDTO patientDTO) {
+<span class="fc" id="L35">		return patientService.addPatient(patientDTO);</span>
+	}
+	
+	@GetMapping(&quot;/patient/update/{name}&quot;)
+	public PatientDTO getUpdateTemplate(@PathVariable String name) {
+<span class="nc" id="L40">		return patientService.getPatientByName(name);</span>
+	}
+	
+	@PostMapping(&quot;/patient/update/{id}&quot;)
+	public boolean modifyPatient(@PathVariable Integer id, @RequestBody PatientDTO patientDTO) {
+<span class="fc" id="L45">		return patientService.modifyPatient(id, patientDTO);</span>
+	}
+	
+	@GetMapping(&quot;/patient/delete/{id}&quot;)
+	public boolean modifyPatient(@PathVariable Integer id) {
+<span class="fc" id="L50">		return patientService.deletePatient(id);</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

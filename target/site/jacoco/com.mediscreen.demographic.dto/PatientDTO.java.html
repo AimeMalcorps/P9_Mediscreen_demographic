@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PatientDTO.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Mediscreen</a> &gt; <a href="index.source.html" class="el_package">com.mediscreen.demographic.dto</a> &gt; <span class="el_source">PatientDTO.java</span></div><h1>PatientDTO.java</h1><pre class="source lang-java linenums">package com.mediscreen.demographic.dto;
+
+import com.mediscreen.demographic.entity.Patient;
+
+public class PatientDTO {
+	
+	private Integer id;
+	private String familly;
+	private String given;
+	private String dob;
+	private Character sex; // M, F, U (unknown)
+	private String address;
+	private String phone;
+	
+	
+	public Integer getId() {
+<span class="fc" id="L17">		return id;</span>
+	}
+	public void setId(Integer id) {
+<span class="fc" id="L20">		this.id = id;</span>
+<span class="fc" id="L21">	}</span>
+	public String getFamilly() {
+<span class="fc" id="L23">		return familly;</span>
+	}
+	public void setFamilly(String familly) {
+<span class="fc" id="L26">		this.familly = familly;</span>
+<span class="fc" id="L27">	}</span>
+	public String getGiven() {
+<span class="fc" id="L29">		return given;</span>
+	}
+	public void setGiven(String given) {
+<span class="fc" id="L32">		this.given = given;</span>
+<span class="fc" id="L33">	}</span>
+	public String getDob() {
+<span class="fc" id="L35">		return dob;</span>
+	}
+	public void setDob(String dob) {
+<span class="fc" id="L38">		this.dob = dob;</span>
+<span class="fc" id="L39">	}</span>
+	public Character getSex() {
+<span class="fc" id="L41">		return sex;</span>
+	}
+	public void setSex(Character sex) {
+<span class="fc" id="L44">		this.sex = sex;</span>
+<span class="fc" id="L45">	}</span>
+	public String getAddress() {
+<span class="fc" id="L47">		return address;</span>
+	}
+	public void setAddress(String address) {
+<span class="fc" id="L50">		this.address = address;</span>
+<span class="fc" id="L51">	}</span>
+	public String getPhone() {
+<span class="fc" id="L53">		return phone;</span>
+	}
+	public void setPhone(String phone) {
+<span class="fc" id="L56">		this.phone = phone;</span>
+<span class="fc" id="L57">	}</span>
+	
+<span class="fc" id="L59">	public PatientDTO() {</span>
+		
+<span class="fc" id="L61">	}</span>
+	
+<span class="fc" id="L63">	public PatientDTO(Patient patient) {</span>
+<span class="fc" id="L64">		this.id = patient.getId();</span>
+<span class="fc" id="L65">		this.familly = patient.getFamilly();</span>
+<span class="fc" id="L66">		this.given = patient.getGiven();</span>
+<span class="fc" id="L67">		this.dob = patient.getDob();</span>
+<span class="fc" id="L68">		this.sex = patient.getSex();</span>
+<span class="fc" id="L69">		this.address = patient.getAddress();</span>
+<span class="fc" id="L70">		this.phone = patient.getPhone();</span>
+<span class="fc" id="L71">	}</span>
+	
+	
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>
