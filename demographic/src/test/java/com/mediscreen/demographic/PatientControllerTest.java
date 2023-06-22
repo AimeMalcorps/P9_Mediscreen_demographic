@@ -34,9 +34,6 @@ public class PatientControllerTest {
 
 	@Autowired
 	public MockMvc mockMvc;
-
-	@Autowired
-	private PatientController patientController;
 	
 	@Autowired
 	private PatientService patientService;
@@ -50,8 +47,6 @@ public class PatientControllerTest {
 		patient.setFamilly("MAYER");
 		patient.setGiven("John");
 		patient.setDob("1968-02-21");
-		List<Patient> patientList = new ArrayList<>();
-		patientList.add(patient);
 		patientRepository.save(patient);
 	}
 	
